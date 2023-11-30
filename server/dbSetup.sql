@@ -1,3 +1,5 @@
+-- Accounts Commands
+
 CREATE TABLE
     IF NOT EXISTS accounts(
         id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
@@ -7,6 +9,8 @@ CREATE TABLE
         email varchar(255) COMMENT 'User Email',
         picture varchar(255) COMMENT 'User Picture'
     ) default charset utf8 COMMENT '';
+
+-- Recipe Commands
 
 CREATE TABLE
     IF NOT EXISTS recipes(
@@ -38,3 +42,44 @@ VALUES (
     );
 
 SELECT * FROM recipes;
+
+DROP TABLE recipes;
+
+-- Ingredient Commands
+
+CREATE TABLE
+    IF NOT EXISTS ingredients (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        name VARCHAR(500) NOT NULL,
+        quantity VARCHAR(500) NOT NULL,
+        creatorId VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
+        FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    ) default charset utf8;
+
+SELECT * FROM ingredients;
+
+SELECT * FROM ingredients WHERE id = "3";
+
+DROP TABLE ingredients;
+
+-- Favorites Commands
+
+CREATE TABLE
+    IF NOT EXISTS favorites (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        accountId VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+        FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+        UNIQUE (accountId, recipeId)
+    ) default charset utf8;
+
+SELECT * FROM favorites;
+
+DROP TABLE favorites;

@@ -19,7 +19,7 @@ public class RecipesService
         Recipe recipe = _recipesRepository.GetRecipeById(recipeId);
         if (recipe == null)
         {
-            throw new Exception($"{recipeId} : Is invalid");
+            throw new Exception($"{recipeId} : Is Invalid or Null");
         }
         return recipe;
     }
@@ -37,7 +37,7 @@ public class RecipesService
         _recipesRepository.EditRecipe(ogRecipe);
         return ogRecipe;
     }
-    internal Recipe DeleteRecipe(int recipeId, string userId)
+    internal string DeleteRecipe(int recipeId, string userId)
     {
         Recipe recipe = GetRecipeById(recipeId);
         if (recipe.CreatorId != userId)
@@ -45,6 +45,6 @@ public class RecipesService
             throw new Exception($"You are not allowed to delete a Recipe not belonging to you");
         }
         _recipesRepository.DeleteRecipe(recipeId);
-        return $"{recipe.Title} Has Been Destroyed";
+        return $"{recipe.Title} Has Been Deleted";
     }
 }

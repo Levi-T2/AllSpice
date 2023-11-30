@@ -6,12 +6,15 @@ public class RecipesController : ControllerBase
 {
     private readonly RecipesService _recipesService;
     private readonly Auth0Provider _auth0Provider;
-    public RecipesController(RecipesService recipesService, Auth0Provider auth0Provider)
+    private readonly IngredientsService _ingredientsService;
+    public RecipesController(RecipesService recipesService, Auth0Provider auth0Provider, IngredientsService ingredientsService)
     {
         _recipesService = recipesService;
         _auth0Provider = auth0Provider;
+        _ingredientsService = ingredientsService;
     }
 
+    // Get All Recipes
     [HttpGet]
     public ActionResult<List<Recipe>> GetRecipes()
     {
@@ -26,6 +29,7 @@ public class RecipesController : ControllerBase
         }
     }
 
+    // Get Recipe By Id
     [HttpGet("{recipeId}")]
     public ActionResult<Recipe> GetRecipeById(int recipeId)
     {
@@ -40,6 +44,7 @@ public class RecipesController : ControllerBase
         }
     }
 
+    // Create Recipe
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<Recipe>> CreateRecipe([FromBody] Recipe recipeData)
@@ -58,6 +63,7 @@ public class RecipesController : ControllerBase
         }
     }
 
+    // Edit Recipe
     [Authorize]
     [HttpPut("{recipeId}")]
     public async Task<ActionResult<Recipe>> EditRecipe(int recipeId, [FromBody] Recipe recipeData)
@@ -75,6 +81,7 @@ public class RecipesController : ControllerBase
         }
     }
 
+    // Delete Recipe
     [Authorize]
     [HttpDelete("{recipeId}")]
     public async Task<ActionResult<Recipe>> DeleteRecipe(int recipeId)
@@ -85,6 +92,21 @@ public class RecipesController : ControllerBase
             string userId = userInfo.Id;
             string message = _recipesService.DeleteRecipe(recipeId, userId);
             return Ok(message);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+
+    //  Get Ingredients By Recipe Id
+    [HttpGet("{recipeId}/ingredients")]
+    public ActionResult<List<Ingredient>> GetIngredientsByRecipeId(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetIngredientsByRecipeId(recipeId);
+            return Ok(ingredients);
         }
         catch (Exception error)
         {
