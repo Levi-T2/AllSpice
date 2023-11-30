@@ -1,4 +1,8 @@
 
+
+
+
+
 namespace AllSpice.Repositories;
 
 public class RecipesRepository
@@ -39,7 +43,43 @@ public class RecipesRepository
             return recipe;
         }, new { recipeId }).FirstOrDefault();
         return recipe;
+    }
+    internal Recipe CreateRecipe(Recipe recipeData)
+    {
+        string sql = @"
+        INSERT INTO recipes
+        (title,
+        instructions,
+        category,
+        img,
+        creatorId)
+        VALUES (@Title, @Instructions, @Category, @Img, @CreatorId);
 
+        SELECT 
+        rec.*, acc.* 
+        FROM recipes rec 
+        JOIN accounts acc ON rec.creatorId = acc.id
+        WHERE rec.id = LAST_INSERT_ID();";
 
+        Recipe recipe = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
+       {
+           recipe.Creator = profile;
+           return recipe;
+       }, recipeData).FirstOrDefault();
+        return recipe;
+    }
+    internal void EditRecipe(Recipe ogRecipe)
+    {
+        string sql = @"
+        UPDATE recipes
+        SET
+        instructions = @Instructions
+        WHERE id = @Id;";
+
+        _db.Execute(sql, ogRecipe);
+    }
+    internal void DeleteRecipe(int recipeId)
+    {
+        throw new NotImplementedException();
     }
 }

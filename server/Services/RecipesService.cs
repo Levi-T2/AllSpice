@@ -23,4 +23,28 @@ public class RecipesService
         }
         return recipe;
     }
+    internal Recipe CreateRecipe(Recipe recipeData)
+    {
+        Recipe recipe = _recipesRepository.CreateRecipe(recipeData);
+        return recipe;
+    }
+    internal Recipe EditRecipe(int recipeId, Recipe recipeData)
+    {
+        Recipe ogRecipe = GetRecipeById(recipeId);
+
+        ogRecipe.Instructions = recipeData.Instructions ?? ogRecipe.Instructions;
+
+        _recipesRepository.EditRecipe(ogRecipe);
+        return ogRecipe;
+    }
+    internal Recipe DeleteRecipe(int recipeId, string userId)
+    {
+        Recipe recipe = GetRecipeById(recipeId);
+        if (recipe.CreatorId != userId)
+        {
+            throw new Exception($"You are not allowed to delete a Recipe not belonging to you");
+        }
+        _recipesRepository.DeleteRecipe(recipeId);
+        return $"{recipe.Title} Has Been Destroyed";
+    }
 }
