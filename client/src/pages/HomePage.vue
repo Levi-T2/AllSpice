@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
-    <section class="row">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-4">
-        {{ recipe.title }}
+    <section class="row d-custom">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-4 my-2">
+        <RecipeCard :recipe="recipe" />
       </div>
     </section>
   </div>
@@ -13,6 +13,7 @@ import { computed, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { recipeService } from '../services/RecipeService';
 import { AppState } from '../AppState.js'
+import RecipeCard from '../components/RecipeCard.vue'
 
 export default {
   setup() {
@@ -28,10 +29,21 @@ export default {
     }
     return {
       recipes: computed(() => AppState.recipes),
-
     }
-  }
+  },
+  components: { RecipeCard },
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.d-custom {
+  justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  .d-custom {
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>
