@@ -12,6 +12,21 @@ public class FavoritesController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
+    // Get Favorite by Id
+    [HttpGet("{favoriteId}")]
+    public ActionResult<Favorite> GetFavoriteById(int favoriteId)
+    {
+        try
+        {
+            Favorite favorite = _favoritesService.GetFavoriteById(favoriteId);
+            return Ok(favorite);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+
     // Create Favorite
     [Authorize]
     [HttpPost]
@@ -23,6 +38,24 @@ public class FavoritesController : ControllerBase
             favoriteData.AccountId = userInfo.Id;
             Favorite favorite = _favoritesService.CreateFavorite(favoriteData);
             return Ok(favorite);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+
+    // Delete Favorite
+    [Authorize]
+    [HttpDelete("{favoriteId}")]
+    public async Task<ActionResult<Favorite>> DeleteFavorite(int favoriteId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            string userId = userInfo.Id;
+            string message = _favoritesService.DeleteFavorite(favoriteId, userId);
+            return Ok(message);
         }
         catch (Exception error)
         {
