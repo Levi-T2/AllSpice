@@ -14,6 +14,7 @@ import Pop from '../utils/Pop';
 import { recipeService } from '../services/RecipeService';
 import { AppState } from '../AppState.js'
 import RecipeCard from '../components/RecipeCard.vue'
+import RecipeDetailsModal from '../components/RecipeDetailsModal.vue';
 
 export default {
   setup() {
@@ -31,7 +32,7 @@ export default {
       recipes: computed(() => AppState.recipes),
     }
   },
-  components: { RecipeCard },
+  components: { RecipeCard, RecipeDetailsModal },
 }
 </script>
 

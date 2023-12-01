@@ -45,6 +45,8 @@ SELECT * FROM recipes;
 
 DROP TABLE recipes;
 
+DELETE FROM recipes LIMIT 10;
+
 -- Ingredient Commands
 
 CREATE TABLE

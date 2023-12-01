@@ -1,7 +1,8 @@
 <template>
     <div id="recipeCard">
         <section class="row justify-content-center">
-            <div class="col-12 recipe-card d-flex flex-column justify-content-between"
+            <div role="button" @click="setRecipeDetails(recipe)"
+                class="col-12 recipe-card d-flex flex-column justify-content-between"
                 :style="{ backgroundImage: `url(${recipe.img})` }"
                 style="height: 20rem; width: 20rem; background-size: cover; background-position: center;">
                 <div class="d-flex justify-content-between align-items-center">
@@ -20,18 +21,31 @@
 
 
 <script>
-import { computed } from 'vue';
-import { AppState } from '../AppState';
+import { Modal } from 'bootstrap';
 import { Recipe } from '../models/Recipe.js'
+import Pop from '../utils/Pop';
+import { logger } from '../utils/Logger';
+import { AppState } from '../AppState';
+import { recipeService } from '../services/RecipeService';
 export default {
     props: {
         recipe: { type: Recipe, required: true }
     },
     setup() {
         return {
-        }
+            async setRecipeDetails(recipeData) {
+                try {
+                    AppState.activeRecipe = {}
+                    AppState.activeRecipe = recipeData
+                    await recipeService.GetIngredientsByRecipeId(recipeData.id)
+                    Modal.getOrCreateInstance('#recipeDetailsModal').show() // this line grabs a modal elem by its id and opens it...does the same this as bs-target&toggle
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
 
-    }
+        };
+    },
 };
 </script>
 

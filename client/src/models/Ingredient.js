@@ -1,16 +1,15 @@
 
-export class Recipe
+export class Ingredient
 {
     constructor(data)
     {
         this.id = data.id
         this.createdAt = data.createdAt
         this.updatedAt = data.updatedAt
-        this.title = data.title
-        this.instructions = data.instructions
-        this.img = data.img
-        this.category = data.category
+        this.name = data.name
+        this.quantity = data.quantity
         this.creatorId = data.creatorId
+        this.recipeId = data.recipeId
         this.creator = data.creator
     }
 }
