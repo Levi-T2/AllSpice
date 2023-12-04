@@ -53,6 +53,7 @@ export default {
                     await ingredientService.CreateIngredient(ingredientData)
                     Modal.getOrCreateInstance('#addIngredientModal').hide()
                     Modal.getOrCreateInstance('#recipeDetailsModal').show()
+                    editable.value = {}
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -66,4 +67,10 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.modal-header {
+    background-color: rgb(36, 97, 36);
+    color: white;
+    border-bottom: 2px solid black;
+}
+</style>

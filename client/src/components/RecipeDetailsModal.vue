@@ -6,7 +6,10 @@
                     <div class="container-fluid">
                         <section class="row">
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
                             </div>
                             <div class="col-4">
                                 <img :src="activeRecipe.img" alt="Recipe Image" class="recipe-img">
@@ -48,6 +51,12 @@
                                     </div>
                                 </section>
                             </div>
+                            <div v-if="account.id == activeRecipe.creatorId" class="col-12 text-end">
+                                <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-danger rounded"
+                                    title="Delete Recipe">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -66,12 +75,29 @@ import { computed } from 'vue';
 import { AppState } from '../AppState.js'
 import EditRecipeModal from './EditRecipeModal.vue';
 import AddIngredientModal from './AddIngredientModal.vue';
+import Pop from '../utils/Pop';
+import { Modal } from 'bootstrap';
+import { recipeService } from '../services/RecipeService';
 
 export default {
     setup() {
         return {
             activeRecipe: computed(() => AppState.activeRecipe),
-            ingredients: computed(() => AppState.ingredientsForRecipe)
+            ingredients: computed(() => AppState.ingredientsForRecipe),
+            account: computed(() => AppState.account),
+            async DeleteRecipe(recipeId) {
+                try {
+                    const yes = await Pop.confirm(`Are you sure you want to delete this recipe?`)
+                    if (!yes) {
+                        return
+                    } else {
+                        await recipeService.DeleteRecipe(recipeId)
+                        Modal.getOrCreateInstance('#recipeDetailsModal').hide()
+                    }
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
         };
     },
     components: { EditRecipeModal, AddIngredientModal }
