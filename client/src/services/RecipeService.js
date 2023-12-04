@@ -20,7 +20,18 @@ class RecipeService
         const newIngredients = res.data.map((ingredients) => new Ingredient(ingredients))
         AppState.ingredientsForRecipe = newIngredients
         logger.log(AppState.ingredientsForRecipe)
-        
+    }
+    async AddRecipe(recipeData)
+    {
+        const res = await api.post(`api/recipes`, recipeData)
+        const newRecipe = new Recipe(res.data)
+        AppState.recipes.push(newRecipe)
+    }
+    async EditRecipe(endpointUrl, editData)
+    {
+        const res = await api.put(endpointUrl, editData)
+        const editedRecipe = new Recipe(res.data)
+        AppState.activeRecipe = editedRecipe
     }
 }
 

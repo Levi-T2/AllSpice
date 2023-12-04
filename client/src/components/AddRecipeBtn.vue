@@ -12,8 +12,6 @@
 
 
 <script>
-import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
 import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
 export default {
@@ -21,7 +19,7 @@ export default {
         return {
             openRecipeModal() {
                 try {
-                    Modal.getOrCreateInstance('#exampleModal').show()
+                    Modal.getOrCreateInstance('#addRecipeModal').show()
                 } catch (error) {
                     Pop.error
                 }

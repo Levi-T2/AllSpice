@@ -59,7 +59,7 @@ export default {
 }
 
 .recipe-card {
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 1px 1px 7px 3px #666666;
     transition: ease-in-out 0.275s;
 }
@@ -70,7 +70,7 @@ export default {
 
 .recipe-top {
     background-color: rgba(0, 0, 0, 0.288);
-    border-radius: 8px;
+    border-radius: 6px;
     color: white;
     text-align: center;
     backdrop-filter: blur(10px);

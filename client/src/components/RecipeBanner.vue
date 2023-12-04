@@ -17,7 +17,9 @@
                         </div>
                     </div>
                     <div class="banner-top-right">
-                        <Login />
+                        <div>
+                            <Login />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,8 +29,6 @@
 
 
 <script>
-import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
 import Login from './Login.vue';
 export default {
     setup() {
