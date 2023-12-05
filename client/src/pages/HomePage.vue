@@ -15,15 +15,25 @@ import { recipeService } from '../services/RecipeService';
 import { AppState } from '../AppState.js'
 import RecipeCard from '../components/RecipeCard.vue'
 import RecipeDetailsModal from '../components/RecipeDetailsModal.vue';
+import { favoriteService } from '../services/FavoriteService';
+import { accountService } from '../services/AccountService';
 
 export default {
   setup() {
     onMounted(() => {
       GetRecipes();
+      GetFavoritesForUser();
     })
     async function GetRecipes() {
       try {
         await recipeService.GetRecipes()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+    async function GetFavoritesForUser() {
+      try {
+        await accountService.GetFavoritesForUser()
       } catch (error) {
         Pop.error(error)
       }

@@ -11,9 +11,9 @@
                     </div>
                     <div class="banner-center-bottom">
                         <div class="selector">
-                            <p role="button" class="selector-1">Home</p>
-                            <p role="button" class="selector-2">My Recipes</p>
-                            <p role="button" class="selector-3">Favorites</p>
+                            <p @click="DisplayAll()" role="button" class="selector-1">Home</p>
+                            <p @click="DisplayMyRecipes()" role="button" class="selector-2">My Recipes</p>
+                            <p @click="DisplayFavorites()" role="button" class="selector-3">Favorites</p>
                         </div>
                     </div>
                     <div class="banner-top-right">
@@ -29,10 +29,39 @@
 
 
 <script>
+import { AppState } from '../AppState';
+import { recipeService } from '../services/RecipeService';
+import { accountService } from '../services/AccountService';
+import Pop from '../utils/Pop';
 import Login from './Login.vue';
+
 export default {
     setup() {
-        return {};
+        return {
+            async DisplayAll() {
+                try {
+                    AppState.recipes = []
+                    await recipeService.GetRecipes()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async DisplayMyRecipes() {
+                try {
+                    AppState.recipes = []
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async DisplayFavorites() {
+                try {
+                    AppState.recipes = []
+                    await accountService.SetRecipesToFavorites()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+        };
     },
     components: { Login }
 };

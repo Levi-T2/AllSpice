@@ -1,15 +1,19 @@
 <template>
     <div id="recipeCard">
         <section class="row justify-content-center">
-            <div role="button" @click="setRecipeDetails(recipe)"
+            <button v-if="!hasFavorited" @click="FavoriteRecipe(recipe.id)" class="btn btn-fav recipe-top"
+                title="Favorite Recipe">
+                <i class="mdi mdi-star-plus-outline"></i>
+            </button>
+            <!-- <button v-else disabled class="btn btn-fav recipe-top" title="Favorite Recipe">
+                <i class="mdi mdi-star-plus-outline"></i>
+            </button> -->
+            <div role="button" @click="SetRecipeDetails(recipe)"
                 class="col-12 recipe-card d-flex flex-column justify-content-between"
                 :style="{ backgroundImage: `url(${recipe.img})` }"
                 style="height: 20rem; width: 20rem; background-size: cover; background-position: center;">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="recipe-top mb-0 mt-1 p-2">{{ recipe.category }}</p>
-                    <button class="btn btn-fav recipe-top">
-                        <i class="mdi mdi-star-plus-outline"></i>
-                    </button>
                 </div>
                 <div class="d-flex mb-1">
                     <p class="w-100 p-1 mb-0 text-center recipe-top">{{ recipe.title }}</p>
@@ -24,21 +28,31 @@
 import { Modal } from 'bootstrap';
 import { Recipe } from '../models/Recipe.js'
 import Pop from '../utils/Pop';
-import { logger } from '../utils/Logger';
 import { AppState } from '../AppState';
 import { recipeService } from '../services/RecipeService';
+import { computed } from 'vue';
+import { favoriteService } from '../services/FavoriteService';
+
 export default {
     props: {
         recipe: { type: Recipe, required: true }
     },
     setup() {
         return {
-            async setRecipeDetails(recipeData) {
+            // hasFavorited: computed(() => AppState.favorites.find((favorite) => favorite.recipeId == recipe.id)),
+            async SetRecipeDetails(recipeData) {
                 try {
-                    AppState.activeRecipe = {}
+                    AppState.activeRecipe = null
                     AppState.activeRecipe = recipeData
                     await recipeService.GetIngredientsByRecipeId(recipeData.id)
-                    Modal.getOrCreateInstance('#recipeDetailsModal').show() // this line grabs a modal elem by its id and opens it...does the same this as bs-target&toggle
+                    Modal.getOrCreateInstance('#recipeDetailsModal').show()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async FavoriteRecipe(recipeId) {
+                try {
+                    await favoriteService.FavoriteRecipe(recipeId)
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -65,25 +79,29 @@ export default {
 }
 
 .recipe-card:hover {
-    box-shadow: 1px 1px 7px 3px var(--bs-success);
+    box-shadow: 1px 1px 9px 7px var(--bs-success);
 }
 
 .recipe-top {
     background-color: rgba(0, 0, 0, 0.288);
-    border-radius: 6px;
+    border-radius: 5px;
     color: white;
     text-align: center;
     backdrop-filter: blur(10px);
 }
 
 .btn-fav {
+    position: absolute;
     color: gold;
     border: 1.5px solid rgba(220, 220, 220, 0);
     transition: ease-in-out 0.275s;
+    width: 5%;
+    border-bottom-left-radius: 22px;
+    margin-left: 16.25rem;
 }
 
 .btn-fav:hover {
-    transform: translateX(-0.35em);
+    // transform: translateY(-0.35em);
     border: 1.5px solid gainsboro;
 }
 </style>

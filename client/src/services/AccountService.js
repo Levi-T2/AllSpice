@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
+import { Favorite } from '../models/Favorite'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
@@ -11,6 +12,19 @@ class AccountService {
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
+  }
+  async SetRecipesToFavorites()
+  {
+    const res = await api.get(`account/favorites`)
+    const newRecipes = res.data.map((favorite) => new Favorite(favorite))
+    AppState.recipes = newRecipes
+  }
+  async GetFavoritesForUser()
+  {
+      const res = await api.get(`account/favorites`)
+      const newFavorites = res.data.map((favorite) => new Favorite(favorite))
+      AppState.favorites = newFavorites
+      logger.log(`[ACCOUNT SERVICE] favorites in our Appstate:`, AppState.favorites)
   }
 }
 

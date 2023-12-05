@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Add Ingredient</h1>
-                    <button @click="returnToDetails()" type="button" class="btn-close" data-bs-dismiss="modal"
+                    <button @click="ReturnToDetails()" type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -58,7 +58,7 @@ export default {
                     Pop.error(error)
                 }
             },
-            returnToDetails() {
+            ReturnToDetails() {
                 Modal.getOrCreateInstance('#recipeDetailsModal').show()
             }
         }
