@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
 import { Favorite } from '../models/Favorite'
+import { Recipe } from '../models/Recipe'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
@@ -16,7 +17,13 @@ class AccountService {
   async SetRecipesToFavorites()
   {
     const res = await api.get(`account/favorites`)
-    const newRecipes = res.data.map((favorite) => new Favorite(favorite))
+    const newRecipes = res.data.map((favorite) => new Recipe(favorite))
+    AppState.recipes = newRecipes
+  }
+  async SetRecipesToMyRecipes()
+  {
+    const res = await api.get(`account/recipes`)
+    const newRecipes = res.data.map((recipe) => new Recipe(recipe))
     AppState.recipes = newRecipes
   }
   async GetFavoritesForUser()

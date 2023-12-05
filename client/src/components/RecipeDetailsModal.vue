@@ -2,22 +2,21 @@
     <div class="modal fade" id="recipeDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
+
                 <div v-if="activeRecipe" class="modal-body">
                     <div class="container-fluid">
                         <section class="row">
-                            <div class="col-12 d-flex justify-content-end">
-                                <div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                            </div>
-                            <div class="col-4">
+                            <div class="col-4 p-0">
                                 <img :src="activeRecipe.img" alt="Recipe Image" class="recipe-img">
                             </div>
-                            <div class="col-8">
-                                <div class="px-2">
-                                    <p class="fs-4 mb-0">{{ activeRecipe.title }}</p>
-                                    <p class="mb-0 style-cat fw-bold">{{ activeRecipe.category }}</p>
+                            <div class="col-8 mt-3">
+                                <div class="d-flex justify-content-between">
+                                    <div class="px-2">
+                                        <p class="fs-4 mb-0">{{ activeRecipe.title }}</p>
+                                        <p class="mb-0 style-cat fw-bold">{{ activeRecipe.category }}</p>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <section class="row justify-content-around mt-3">
                                     <div class="col-6">
@@ -51,7 +50,7 @@
                                     </div>
                                 </section>
                             </div>
-                            <div v-if="account.id == activeRecipe.creatorId" class="col-12 text-end">
+                            <div v-if="account.id == activeRecipe.creatorId" class="col-12 text-end mb-2">
                                 <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-danger rounded"
                                     title="Delete Recipe">
                                     <i class="mdi mdi-delete"></i>
@@ -109,7 +108,7 @@ export default {
 .style-cat {
     background-color: grey;
     border-radius: 10px;
-    width: 18%;
+    width: auto;
     text-align: center;
     color: white;
 }
@@ -119,6 +118,8 @@ export default {
     width: 20rem;
     background-size: cover;
     background-position: center;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
 }
 
 .recipe-title {
@@ -157,5 +158,9 @@ export default {
 
 .recipe-txt:hover {
     color: white;
+}
+
+.modal-body {
+    padding: 0%;
 }
 </style>

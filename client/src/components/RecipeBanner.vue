@@ -16,7 +16,15 @@
                             <p @click="DisplayFavorites()" role="button" class="selector-3">Favorites</p>
                         </div>
                     </div>
-                    <div class="banner-top-right">
+                    <div class="banner-top-right d-flex flex-row align-items-center">
+                        <div class="px-3">
+                            <form class="d-flex">
+                                <input class="search-box" type="search" name="searchBox" placeholder="Search...">
+                                <div role="button" class="search-btn">
+                                    <p class="mb-0"><i class="mdi mdi-magnify"></i></p>
+                                </div>
+                            </form>
+                        </div>
                         <div>
                             <Login />
                         </div>
@@ -49,6 +57,7 @@ export default {
             async DisplayMyRecipes() {
                 try {
                     AppState.recipes = []
+                    await accountService.SetRecipesToMyRecipes()
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -69,6 +78,26 @@ export default {
 
 
 <style lang="scss" scoped>
+.search-box {
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+    border: 1px solid black;
+}
+
+.search-btn {
+    background-color: gainsboro;
+    padding: 0.4rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    transition: ease-in-out 0.275s;
+}
+
+.search-btn:hover {
+    background-color: rgb(162, 162, 162);
+}
+
 .txt-shadow {
     text-shadow: 2px 4.5px 4px black;
     color: white;

@@ -3,11 +3,11 @@
         <section class="row justify-content-center">
             <button v-if="!hasFavorited" @click="FavoriteRecipe(recipe.id)" class="btn btn-fav recipe-top"
                 title="Favorite Recipe">
-                <i class="mdi mdi-star-plus-outline"></i>
+                <i class="mdi mdi-star-outline"></i>
             </button>
-            <!-- <button v-else disabled class="btn btn-fav recipe-top" title="Favorite Recipe">
-                <i class="mdi mdi-star-plus-outline"></i>
-            </button> -->
+            <button v-else disabled class="btn btn-fav recipe-top" title="This recipe has been favorited">
+                <i class="mdi mdi-star"></i>
+            </button>
             <div role="button" @click="SetRecipeDetails(recipe)"
                 class="col-12 recipe-card d-flex flex-column justify-content-between"
                 :style="{ backgroundImage: `url(${recipe.img})` }"
@@ -30,16 +30,16 @@ import { Recipe } from '../models/Recipe.js'
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { recipeService } from '../services/RecipeService';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { favoriteService } from '../services/FavoriteService';
 
 export default {
     props: {
         recipe: { type: Recipe, required: true }
     },
-    setup() {
+    setup(props) {
         return {
-            // hasFavorited: computed(() => AppState.favorites.find((favorite) => favorite.recipeId == recipe.id)),
+            hasFavorited: computed(() => AppState.favorites.find((favorite) => favorite.recipeId == props.recipe.id)),
             async SetRecipeDetails(recipeData) {
                 try {
                     AppState.activeRecipe = null

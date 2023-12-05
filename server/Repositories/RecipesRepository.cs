@@ -1,3 +1,4 @@
+
 namespace AllSpice.Repositories;
 
 public class RecipesRepository
@@ -77,5 +78,11 @@ public class RecipesRepository
     {
         string sql = @"DELETE FROM recipes WHERE id = @recipeId LIMIT 1;";
         _db.Execute(sql, new { recipeId });
+    }
+    internal List<Recipe> GetRecipesForAccount(string userId)
+    {
+        string sql = @"SELECT * FROM recipes WHERE creatorId = @userId;";
+        List<Recipe> recipesList = _db.Query<Recipe>(sql, new { userId }).ToList();
+        return recipesList;
     }
 }

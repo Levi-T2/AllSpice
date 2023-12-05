@@ -47,4 +47,9 @@ public class RecipesService
         _recipesRepository.DeleteRecipe(recipeId);
         return $"{recipe.Title} Has Been Deleted";
     }
+    internal List<Recipe> GetRecipesForAccount(string userId)
+    {
+        List<Recipe> recipesList = _recipesRepository.GetRecipesForAccount(userId);
+        return recipesList;
+    }
 }
