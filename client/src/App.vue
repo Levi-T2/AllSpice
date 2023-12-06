@@ -5,9 +5,6 @@
   <main>
     <router-view />
   </main>
-  <footer class="sticky-bottom justify-content-end">
-    <AddRecipeBtn />
-  </footer>
 
   <!-- MODALS -->
 

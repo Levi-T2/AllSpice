@@ -12,7 +12,9 @@
                     <div class="banner-center-bottom">
                         <div class="selector">
                             <p @click="DisplayAll()" role="button" class="selector-1">Home</p>
+                            <p class="mb-0">|</p>
                             <p @click="DisplayMyRecipes()" role="button" class="selector-2">My Recipes</p>
+                            <p class="mb-0">|</p>
                             <p @click="DisplayFavorites()" role="button" class="selector-3">Favorites</p>
                         </div>
                     </div>
@@ -58,6 +60,9 @@ export default {
                 try {
                     AppState.recipes = []
                     await accountService.SetRecipesToMyRecipes()
+                    // if (AppState.recipes = []) {
+                    //     Pop.toast(`You haven't made any recipes`)
+                    // }
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -125,36 +130,39 @@ export default {
 
 .selector-1 {
     margin-bottom: 0%;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
     transition: ease-in-out 0.225s;
 }
 
 .selector-1:hover {
-    transform: translateY(-0.25rem);
+    transform: translateY(-0.275rem);
+    color: var(--bs-success);
 }
 
 .selector-2 {
     margin-bottom: 0%;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
     transition: ease-in-out 0.225s;
 
 }
 
 .selector-2:hover {
-    transform: translateY(-0.25rem);
+    transform: translateY(-0.275rem);
+    color: var(--bs-success);
 }
 
 .selector-3 {
     margin-bottom: 0%;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
     transition: ease-in-out 0.225s;
 }
 
 .selector-3:hover {
-    transform: translateY(-0.25rem);
+    transform: translateY(-0.275rem);
+    color: var(--bs-success);
 }
 
 // !SECTION

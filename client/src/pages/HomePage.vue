@@ -6,6 +6,9 @@
       </div>
     </section>
   </div>
+  <div class="sticky-bottom">
+    <AddRecipeBtn />
+  </div>
 </template>
 
 <script>
@@ -17,6 +20,7 @@ import RecipeCard from '../components/RecipeCard.vue'
 import RecipeDetailsModal from '../components/RecipeDetailsModal.vue';
 import { favoriteService } from '../services/FavoriteService';
 import { accountService } from '../services/AccountService';
+import AddRecipeBtn from '../components/AddRecipeBtn.vue';
 
 export default {
   setup() {
@@ -42,7 +46,7 @@ export default {
       recipes: computed(() => AppState.recipes),
     }
   },
-  components: { RecipeCard, RecipeDetailsModal },
+  components: { RecipeCard, RecipeDetailsModal, AddRecipeBtn },
 }
 </script>
 

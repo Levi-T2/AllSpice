@@ -15,7 +15,9 @@
                                 id="recipeInstructions" required maxlength=2200 />
                         </div>
                         <div class="my-1 text-end">
-                            <button type="submit" class="btn btn-warning">Save Changes</button>
+                            <button title="Save Changes" type="submit" class="btn btn-warning rounded-pill">Save
+                                <i class="mdi mdi-content-save"></i>
+                            </button>
                         </div>
                     </form>
                 </div>

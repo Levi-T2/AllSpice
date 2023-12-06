@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
         <section class="row">
-            <div class="col-12 d-flex mb-4">
-                <button @click="OpenRecipeModal" class="btn btn-success rounded-circle text-light fw-bold">
+            <div class="col-12 d-flex justify-content-end mb-2">
+                <button @click="OpenRecipeModal" class="btn btn-success rounded-circle text-light fw-bold fs-5">
                     <i class="mdi mdi-plus"></i>
                 </button>
             </div>

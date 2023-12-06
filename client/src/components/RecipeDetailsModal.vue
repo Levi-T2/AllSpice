@@ -2,12 +2,19 @@
     <div class="modal fade" id="recipeDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-
                 <div v-if="activeRecipe" class="modal-body">
                     <div class="container-fluid">
                         <section class="row">
                             <div class="col-4 p-0">
-                                <img :src="activeRecipe.img" alt="Recipe Image" class="recipe-img">
+                                <div class="recipe-container">
+                                    <img :src="activeRecipe.img" alt="Recipe Image" class="recipe-img">
+                                    <div v-if="account.id == activeRecipe.creatorId" class="container-bottom-left">
+                                        <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-danger rounded"
+                                            title="Delete Recipe">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-8 mt-3">
                                 <div class="d-flex justify-content-between">
@@ -18,7 +25,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <section class="row justify-content-around mt-3">
+                                <section class="row justify-content-around my-3">
                                     <div class="col-6">
                                         <p class="mb-0 fs-4 text-center recipe-title">Instructions</p>
                                         <div class="recipe-table">
@@ -49,12 +56,6 @@
                                         </div>
                                     </div>
                                 </section>
-                            </div>
-                            <div v-if="account.id == activeRecipe.creatorId" class="col-12 text-end mb-2">
-                                <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-danger rounded"
-                                    title="Delete Recipe">
-                                    <i class="mdi mdi-delete"></i>
-                                </button>
                             </div>
                         </section>
                     </div>
@@ -114,8 +115,8 @@ export default {
 }
 
 .recipe-img {
-    max-height: 27.5rem;
-    width: 20rem;
+    height: 28rem;
+    width: 22rem;
     background-size: cover;
     background-position: center;
     border-bottom-left-radius: 7px;
@@ -163,4 +164,19 @@ export default {
 .modal-body {
     padding: 0%;
 }
+
+// SECTION CSS for recipe Img positioning
+
+.recipe-container {
+    position: relative;
+    text-align: start;
+}
+
+.container-bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+// !SECTION
 </style>

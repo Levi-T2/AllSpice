@@ -1,7 +1,7 @@
 <template>
     <div id="recipeCard">
         <section class="row justify-content-center">
-            <button v-if="!hasFavorited" @click="FavoriteRecipe(recipe.id)" class="btn btn-fav recipe-top"
+            <button id="favBtn" v-if="!hasFavorited" @click="FavoriteRecipe(recipe.id)" class="btn btn-fav recipe-top"
                 title="Favorite Recipe">
                 <i class="mdi mdi-star-outline"></i>
             </button>
@@ -9,9 +9,7 @@
                 <i class="mdi mdi-star"></i>
             </button>
             <div role="button" @click="SetRecipeDetails(recipe)"
-                class="col-12 recipe-card d-flex flex-column justify-content-between"
-                :style="{ backgroundImage: `url(${recipe.img})` }"
-                style="height: 20rem; width: 20rem; background-size: cover; background-position: center;">
+                class="col-12 recipe-card d-flex flex-column justify-content-between recipe-bg">
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="recipe-top mb-0 mt-1 p-2">{{ recipe.category }}</p>
                 </div>
@@ -40,6 +38,7 @@ export default {
     setup(props) {
         return {
             hasFavorited: computed(() => AppState.favorites.find((favorite) => favorite.recipeId == props.recipe.id)),
+            recipeImg: computed(() => `url(${props.recipe.img})`),
             async SetRecipeDetails(recipeData) {
                 try {
                     AppState.activeRecipe = null
@@ -52,6 +51,8 @@ export default {
             },
             async FavoriteRecipe(recipeId) {
                 try {
+                    const btn = document.getElementById('favBtn')
+                    btn.classList.add("disabled")
                     await favoriteService.FavoriteRecipe(recipeId)
                 } catch (error) {
                     Pop.error(error)
@@ -103,5 +104,13 @@ export default {
 .btn-fav:hover {
     // transform: translateY(-0.35em);
     border: 1.5px solid gainsboro;
+}
+
+.recipe-bg {
+    background-image: v-bind(recipeImg);
+    height: 20rem;
+    width: 20rem;
+    background-size: cover;
+    background-position: center;
 }
 </style>
