@@ -42,11 +42,11 @@ export default {
             editable,
             async EditRecipe(recipeId) {
                 try {
-                    const endpointUrl = `api/recipes/${recipeId}`
                     const editData = editable.value
-                    await recipeService.EditRecipe(endpointUrl, editData)
+                    await recipeService.EditRecipe(recipeId, editData)
                     Modal.getOrCreateInstance('#editRecipeModal').hide()
                     Modal.getOrCreateInstance('#recipeDetailsModal').show()
+                    editable.value = {}
                 } catch (error) {
                     Pop.error(error)
                 }

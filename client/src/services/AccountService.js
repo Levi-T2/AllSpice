@@ -14,24 +14,21 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
-  async SetRecipesToFavorites()
-  {
+  async SetRecipesToFavorites() {
     const res = await api.get(`account/favorites`)
     const newRecipes = res.data.map((favorite) => new Recipe(favorite))
     AppState.recipes = newRecipes
   }
-  async SetRecipesToMyRecipes()
-  {
+  async SetRecipesToMyRecipes() {
     const res = await api.get(`account/recipes`)
     const newRecipes = res.data.map((recipe) => new Recipe(recipe))
     AppState.recipes = newRecipes
   }
-  async GetFavoritesForUser()
-  {
-      const res = await api.get(`account/favorites`)
-      const newFavorites = res.data.map((favorite) => new Favorite(favorite))
-      AppState.favorites = newFavorites
-      logger.log(`[ACCOUNT SERVICE] favorites in our Appstate:`, AppState.favorites)
+  async GetFavoritesForUser() {
+    const res = await api.get(`account/favorites`)
+    const newFavorites = res.data.map((favorite) => new Favorite(favorite))
+    AppState.favorites = newFavorites
+    logger.log(`[ACCOUNT SERVICE] favorites in our Appstate:`, AppState.favorites)
   }
 }
 

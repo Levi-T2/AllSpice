@@ -9,7 +9,7 @@
                                 <div class="recipe-container">
                                     <img :src="activeRecipe.img" alt="Recipe Image" class="recipe-img">
                                     <div v-if="account.id == activeRecipe.creatorId" class="container-bottom-left">
-                                        <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-danger rounded"
+                                        <button @click="DeleteRecipe(activeRecipe.id)" class="btn btn-delete"
                                             title="Delete Recipe">
                                             <i class="mdi mdi-delete"></i>
                                         </button>
@@ -106,6 +106,41 @@ export default {
 
 
 <style lang="scss" scoped>
+// SECTION Custom CSS Btns
+
+.btn-delete {
+    background-color: rgba(0, 0, 0, 0.288);
+    backdrop-filter: blur(10px);
+    color: red;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 1px;
+    transition: ease-in-out 0.275s;
+    --bs-btn-padding-x: 0.85rem;
+    --bs-btn-padding-y: 0.475rem;
+}
+
+.btn-delete:hover {
+    background-color: red;
+    color: black;
+}
+
+.recipe-btn {
+    background-color: var(--bs-success);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    color: white;
+    text-align: center;
+    transition: ease-in-out 0.275s;
+}
+
+.recipe-btn:hover {
+    background-color: rgb(36, 97, 36);
+    color: white;
+}
+
+// !SECTION
+
 .style-cat {
     background-color: grey;
     border-radius: 10px;
@@ -116,7 +151,7 @@ export default {
 
 .recipe-img {
     height: 28rem;
-    width: 22rem;
+    width: 22.5rem;
     background-size: cover;
     background-position: center;
     border-bottom-left-radius: 7px;
@@ -137,19 +172,6 @@ export default {
     border-bottom: 1px solid black;
 }
 
-.recipe-btn {
-    background-color: var(--bs-success);
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    color: white;
-    text-align: center;
-    transition: ease-in-out 0.275s;
-}
-
-.recipe-btn:hover {
-    background-color: rgb(36, 97, 36);
-    color: white;
-}
 
 .recipe-txt {
     color: black;
@@ -174,8 +196,8 @@ export default {
 
 .container-bottom-left {
     position: absolute;
-    bottom: 8px;
-    left: 16px;
+    bottom: .01px;
+    left: .01px;
 }
 
 // !SECTION

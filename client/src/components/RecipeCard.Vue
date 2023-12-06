@@ -28,7 +28,7 @@ import { Recipe } from '../models/Recipe.js'
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { recipeService } from '../services/RecipeService';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { favoriteService } from '../services/FavoriteService';
 
 export default {
@@ -66,13 +66,6 @@ export default {
 
 
 <style lang="scss" scoped>
-.recipe-img {
-    height: 20rem;
-    width: 20rem;
-    object-fit: cover;
-    background-position: center;
-}
-
 .recipe-card {
     border-radius: 6px;
     box-shadow: 1px 1px 7px 3px #666666;
@@ -94,7 +87,7 @@ export default {
 .btn-fav {
     position: absolute;
     color: gold;
-    border: 1.5px solid rgba(220, 220, 220, 0);
+    border: 1px solid rgba(0, 0, 0, 0);
     transition: ease-in-out 0.275s;
     width: 5%;
     border-bottom-left-radius: 22px;
@@ -102,8 +95,8 @@ export default {
 }
 
 .btn-fav:hover {
-    // transform: translateY(-0.35em);
-    border: 1.5px solid gainsboro;
+    background-color: gold;
+    color: black;
 }
 
 .recipe-bg {

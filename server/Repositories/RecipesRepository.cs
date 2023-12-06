@@ -1,4 +1,5 @@
 
+
 namespace AllSpice.Repositories;
 
 public class RecipesRepository
@@ -22,6 +23,23 @@ public class RecipesRepository
             recipe.Creator = profile;
             return recipe;
         }).ToList();
+        return recipes;
+    }
+    internal List<Recipe> GetRecipesWithQuery(string category)
+    {
+        category = $"%{category}%";
+        string sql = @"
+        SELECT 
+        rec.*, acc.* 
+        FROM recipes rec 
+        JOIN accounts acc ON rec.creatorId = acc.id
+        WHERE rec.category LIKE @category;";
+
+        List<Recipe> recipes = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
+        {
+            recipe.Creator = profile;
+            return recipe;
+        }, new { category }).ToList();
         return recipes;
     }
     internal Recipe GetRecipeById(int recipeId)
@@ -85,4 +103,5 @@ public class RecipesRepository
         List<Recipe> recipesList = _db.Query<Recipe>(sql, new { userId }).ToList();
         return recipesList;
     }
+
 }

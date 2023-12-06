@@ -1,8 +1,16 @@
 <template>
   <div class="container-fluid">
-    <section class="row d-custom">
+    <section v-if="recipes.length" class="row d-custom">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-4 my-2">
         <RecipeCard :recipe="recipe" />
+      </div>
+    </section>
+    <section v-else class="row flex-column align-items-center justify-content-center">
+      <div class="col-12 text-center">
+        <p class="mt-2 mb-0 fs-2 text-center">
+          <i class="mdi mdi-autorenew mdi-spin"></i>
+          Loading...
+        </p>
       </div>
     </section>
   </div>
